@@ -1,7 +1,9 @@
+#include "StarletMath/vec2.hpp"
+
 #include <cmath>
 #include <iostream>
 
-namespace NoiseSandbox {
+namespace Starlet::NoiseSandbox {
 	namespace {
 		int permutations[] = { 
 			151, 160, 137,  91,  90,  15, 131,  13, 201,  95,  96,  53, 194, 233,   7, 225,
@@ -42,29 +44,29 @@ namespace NoiseSandbox {
 			return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
 		}
 
-		float noise2D(float x, float y) {
-			const int X = static_cast<int>(floor(x)) & 255,
-				Y = static_cast<int>(floor(y)) & 255;
+		float noise2D(const Math::Vec2<float>& pos) {
+			const int X = static_cast<int>(floor(pos.x)) & 255,
+				        Y = static_cast<int>(floor(pos.y)) & 255;
 
-			x -= floor(x);
-			y -= floor(y);
+			const float x = pos.x - floor(pos.x),
+									y = pos.y - floor(pos.y);
 
 			const float u = fade(x),
-				v = fade(y);
+									v = fade(y);
 
 			const int A = p[X] + Y,
-				B = p[X + 1] + Y;
+								B = p[X + 1] + Y;
 
 			return lerp(v,
-				lerp(u, grad2D(p[A], x, y), grad2D(p[B], x - 1, y)),
-				lerp(u, grad2D(p[A + 1], x, y - 1), grad2D(p[B + 1], x - 1, y - 1))
+				lerp(u, grad2D(p[A  ], x, y  ), grad2D(p[B  ], x - 1, y  )),
+				lerp(u, grad2D(p[A+1], x, y-1), grad2D(p[B+1], x - 1, y-1))
 			);
 		}
 	}
 }
 
 int main(int argc, char* argv[]) {
-	NoiseSandbox::init();
+	Starlet::NoiseSandbox::init();
 
 	const int width{ 100 };
 	const int height{ 70 };
@@ -74,9 +76,8 @@ int main(int argc, char* argv[]) {
 	std::cout << "2D Perlin Noise Sample:\n";
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
-			float nx = x * scale;
-			float ny = y * scale;
-			float n = NoiseSandbox::noise2D(nx, ny);
+			Starlet::Math::Vec2<float> pos(x * scale, y * scale);
+			float n = Starlet::NoiseSandbox::noise2D(pos);
 
 			n = (n + 1.0f) * 0.5f;
 			n = std::max(0.0f, std::min(1.0f, n));
