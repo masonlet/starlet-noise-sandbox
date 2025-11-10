@@ -1,4 +1,4 @@
-#include "StarletMath/vec2.hpp"
+#include "starlet-math/vec2.hpp"
 
 #include <cmath>
 #include <iostream>

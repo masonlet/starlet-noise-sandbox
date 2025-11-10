@@ -1,4 +1,4 @@
-# StarletNoiseSandbox
+# Starlet Noise Sandbox
 
 A C++ playground for experimenting with noise algorithms.
 
@@ -12,8 +12,8 @@ This project uses **CMake**. Follow these steps to build:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Masonlet/StarletNoiseSandbox.git
-cd StarletNoiseSandbox
+git clone https://github.com/masonlet/starlet-noise-sandbox.git
+cd starlet-noise-sandbox
 ```
 
 ### 2. Create a Build Directory and Generate Build Files
